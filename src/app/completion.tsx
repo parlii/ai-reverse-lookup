@@ -3,7 +3,6 @@
 import { Anek_Devanagari, Noto_Serif_Devanagari } from "next/font/google";
 
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-// import responseFormat from './response_format.md';
 import { useCompletion } from "ai/react";
 import { useState } from "react";
 
@@ -12,7 +11,7 @@ const anek = Anek_Devanagari({ subsets: ["devanagari", "latin"] });
 const noto = Noto_Serif_Devanagari({ subsets: ["devanagari", "latin"] });
 
 export default function Completion() {
-  const [language, setLanguage] = useState<string>("en");
+  const [language, setLanguage] = useState<string>("English");
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -49,15 +48,20 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
 `;
 
   return (
-    <div className="flex flex-col items-center h-screen mt-4 overflow-y-auto">
-      <h1 className="text-2xl font-bold">Reverse lookup dictionary using AI</h1>
-      <div className="p-4 rounded-lg shadow-md m-4 w-full max-w-md">
+    <div className="flex flex-col items-center h-screen mt-4 mb-2 overflow-y-auto px-4 md:px-0">
+      <h1 className="text-2xl font-bold text-center mt-6 mb-4">
+        AI reverse lookup dictionary
+      </h1>
+      <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md text-lg">
         <form onSubmit={handleSubmit}>
-          {/* // input field for the description of the word */}
-          <label htmlFor="input" className="block">
-            Enter the description of the word you want to find:
-          </label>
-          <div className="mt-1 flex flex-col">
+          {/* Textarea for the description of the word */}
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="input"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Enter the description of the word you want to find:
+            </label>
             <textarea
               id="input"
               name="input"
@@ -65,18 +69,24 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
               onChange={handleInputChange}
               rows={2}
               required
-              className="block flex-grow mb-2 px-2 py-1 border rounded-md resize-none"
+              className="block flex-grow px-2 py-1 border rounded-md resize-none"
             />
           </div>
-          <div className="flex flex-row justify-between">
-            <div className="mb-2">
+          <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4" >
+            <div className="flex-grow">
+              <label
+                htmlFor="language"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Language:
+              </label>
               <select
                 id="language"
                 name="language"
                 value={language}
                 onChange={handleLanguageChange}
                 required
-                className="block w-full px-2 py-1 border rounded-md"
+                className="mt-1 block w-full px-2 py-1 border rounded-md"
               >
                 <option value="English">English</option>
                 <option value="Nepali">Nepali</option>
@@ -88,7 +98,7 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
             {isLoading ? (
               <button
                 type="button"
-                className="px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800"
+                className="mt-4 md:mt-0 px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800"
                 onClick={stop}
               >
                 Stop
@@ -96,7 +106,7 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
             ) : (
               <button
                 type="submit"
-                className="px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900"
+                className="mt-4 md:mt-0 px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900"
                 disabled={isLoading}
               >
                 Find me a word!
@@ -105,7 +115,8 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
           </div>
         </form>
       </div>
-      <div className="p-4 rounded-lg shadow-md m-4 w-full max-w-md whitespace-pre-wrap overflow-auto">
+
+      <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md whitespace-pre-wrap overflow-auto text-lg">
         {completion ? (
           <div className={noto.className}>
             <ReactMarkdown children={completion} />
