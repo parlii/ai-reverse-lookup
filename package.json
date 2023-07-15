@@ -9,16 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
+    "@next/mdx": "^13.4.10",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "ai": "^2.1.20",
     "autoprefixer": "10.4.14",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
+    "fs": "^0.0.1-security",
     "next": "13.4.10",
+    "openai-edge": "^1.2.0",
     "postcss": "8.4.26",
+    "raw-loader": "^4.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-markdown": "^8.0.7",
+    "remark": "^14.0.3",
+    "remark-html": "^15.0.2",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
   }
