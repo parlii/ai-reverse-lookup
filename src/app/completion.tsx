@@ -115,7 +115,6 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
           </div>
         </form>
       </div>
-
       <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md whitespace-pre-wrap overflow-auto text-lg">
         {completion ? (
           <div className={noto.className}>
