@@ -1,34 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reverse Lookup Dictionary with GPT4
+
+Reverse Lookup Dictionary is an interactive application that uses OpenAI's GPT-4 model to perform reverse dictionary lookups. Given a detailed description of a word, it will suggest a matching word from the specified language.
+
+## What it does
+
+The application receives as input a detailed description of a word, along with a specified language. It then uses the GPT-4 model to generate a word in the chosen language that best matches the description.
+
+The output is formatted in Markdown and includes:
+
+- **Word** (Pronunciation) *Part of Speech*
+- Definition in the chosen language
+- An example sentence using the word in the chosen language
+- A brief etymology of the word
+- A list of alternatives or synonyms in the chosen language
+
+The response is entirely in the target language and does not include translations to other languages. 
+
+## How to use
+
+The application is designed to be interacted with through a simple user interface where you can input a description and select a language.
+
+You can follow these steps to use the application:
+
+1. Input the description of the word in the text area provided
+2. Select the language in which you want to find the word
+3. Click on the "Generate" button to get the result
+4. The result will be displayed in the output section in a nicely formatted markdown
 
 ## Getting Started
 
-First, run the development server:
+The application is built in TypeScript and uses Vercel's KV storage to store the results.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### Prerequisites
+
+- Node.js
+- TypeScript
+- Vercel account (for KV storage)
+
+### Installation
+
+Clone the repo:
 ```
+git clone https://github.com/parlii/ai-reverse-lookup.git
+```
+Navigate to the project directory and install dependencies:
+```
+cd ai-reverse-lookup
+npm install
+```
+Create an `.env` file and add your OpenAI API key:
+```
+OPENAI_API_KEY=your_openai_api_key
+```
+Start the development server:
+```
+npm run dev
+```
+The application is now running on [localhost:3000](http://localhost:3000).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application is built with the following technologies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Next.js
+- TypeScript
+- Vercel KV
+- OpenAI API
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the terms of the MIT license.
