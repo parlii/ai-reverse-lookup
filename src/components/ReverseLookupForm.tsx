@@ -48,13 +48,13 @@ const ReverseLookupForm = () => {
             placeholder="Enter the description of the word you want to find"
           />
         </div>
-        <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4 md:mt-2">
-          <div>
-            <LanguageSelector
-              language={language}
-              onLanguageChange={handleLanguageChange}
-            />
-          </div>
+        <div className="flex flex-row items-center justify-between items-end space-x-2 md:space-x-2 mt-4 md:mt-2">
+          {/* <div> */}
+          <LanguageSelector
+            language={language}
+            onLanguageChange={handleLanguageChange}
+          />
+          {/* </div> */}
           {isLoading ? (
             <button
               type="button"
@@ -66,7 +66,7 @@ const ReverseLookupForm = () => {
           ) : (
             <button
               type="submit"
-              className="px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900 sm:w-auto whitespace-nowrap"
+              className="px-3 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900 sm:w-auto whitespace-nowrap"
               disabled={isLoading}
             >
               Find me a word!
