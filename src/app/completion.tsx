@@ -72,7 +72,7 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
               className="block flex-grow px-2 py-1 border rounded-md resize-none"
             />
           </div>
-          <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4" >
+          <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4">
             <div className="flex-grow">
               <label
                 htmlFor="language"
@@ -119,11 +119,11 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
       <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md whitespace-pre-wrap overflow-auto text-lg">
         {completion ? (
           <div className={noto.className}>
-            <ReactMarkdown children={completion} />
+            <ReactMarkdown>{completion}</ReactMarkdown>
           </div>
         ) : (
           <div className="text-gray-500">
-            <ReactMarkdown children={response_format} />
+            <ReactMarkdown>{response_format}</ReactMarkdown>
           </div>
         )}
       </div>
