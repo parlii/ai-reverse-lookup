@@ -93,6 +93,17 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
                 <option value="Hindi">Hindi</option>
                 <option value="French">French</option>
                 <option value="Spanish">Spanish</option>
+                <option value="German">German</option>
+                <option value="Italian">Italian</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Russian">Russian</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Korean">Korean</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Hmong">Hmong</option>
+                <option value="Vietnamese">Vietnamese</option>
+                <option value="Thai">Thai</option>
               </select>
             </div>
             {isLoading ? (
