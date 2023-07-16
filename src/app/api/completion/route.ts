@@ -129,7 +129,13 @@ export async function POST(req: Request) {
   })
 
   // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response)
+  const stream = OpenAIStream(response,{
+    onCompletion: async (completion: string) => {
+      // This callback is called when the stream completes
+      // You can use this to save the final completion to your database
+      console.log(completion)
+    }
+  })
 
   // Respond with the stream
   return new StreamingTextResponse(stream)
