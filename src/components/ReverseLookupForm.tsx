@@ -31,7 +31,7 @@ const ReverseLookupForm = () => {
   });
 
   return (
-    <div className="p-2 rounded-lg shadow-md w-full md:max-w-md text-lg">
+    <div className="p-2 rounded-lg shadow-md w-full md:max-w-md text-lg mb-4">
       <form
         onSubmit={handleSubmit}
         className="border dark:border:white p-4 rounded-lg"
