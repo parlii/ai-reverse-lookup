@@ -60,13 +60,13 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
           <FaGithub className="inline-block" size={24} />
         </a>
       </div>
-      <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md text-lg">
+      <div className="p-4 rounded-lg border shadow-md m-4 w-full md:max-w-md text-lg dark:border-white dark:border">
         <form onSubmit={handleSubmit}>
           {/* Textarea for the description of the word */}
           <div className="flex flex-col space-y-2">
             <label
               htmlFor="input"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Enter the description of the word you want to find:
             </label>
@@ -77,14 +77,14 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
               onChange={handleInputChange}
               rows={2}
               required
-              className="block flex-grow px-2 py-1 border rounded-md resize-none"
+              className="block flex-grow px-2 py-1 border rounded-md resize-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
           <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4">
             <div className="flex-grow">
               <label
                 htmlFor="language"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-white"
               >
                 Language:
               </label>
@@ -94,7 +94,7 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
                 value={language}
                 onChange={handleLanguageChange}
                 required
-                className="mt-1 block w-full px-2 py-1 border rounded-md"
+                className="mt-1 block w-full px-2 py-1 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white "
               >
                 <option value="English">English</option>
                 <option value="Nepali">Nepali</option>
