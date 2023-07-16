@@ -2,6 +2,7 @@
 
 import { Anek_Devanagari, Noto_Serif_Devanagari } from "next/font/google";
 
+import { FaGithub } from "react-icons/fa";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useCompletion } from "ai/react";
 import { useState } from "react";
@@ -49,9 +50,16 @@ Alternatives: सुस्ती, अकर्मण्यता, निष्�
 
   return (
     <div className="flex flex-col items-center h-screen mt-4 mb-2 overflow-y-auto px-4 md:px-0">
-      <h1 className="text-2xl font-bold text-center mt-6 mb-4">
-        AI reverse lookup dictionary
-      </h1>
+      <div className="flex items-center justify-between justify-center space-x-4">
+        <h1 className="text-2xl font-bold text-center mt-6 mb-4">
+          AI reverse lookup dictionary
+        </h1>
+        <a
+          href="https://github.com/parlii/ai-reverse-lookup"
+        >
+          <FaGithub className="inline-block" size={24} />
+        </a>
+      </div>
       <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md text-lg">
         <form onSubmit={handleSubmit}>
           {/* Textarea for the description of the word */}
