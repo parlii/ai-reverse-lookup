@@ -3,6 +3,8 @@
 import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 
+import {kv} from '@vercel/kv'
+
 export const runtime = 'edge'
 
 const apiConfig = new Configuration({
@@ -108,7 +110,7 @@ const system_message_to_use = (language: string) => {
     content: prompt,
   }
 
-  console.log(systemMessage);
+  // console.log(systemMessage);
 
   return [systemMessage, userPrompt];
 }
@@ -118,6 +120,10 @@ export async function POST(req: Request) {
   
   // Extract the `prompt` from the body of the request
   const { prompt, language } = await req.json();
+
+  const key = JSON.stringify(prompt) // come up with a key based on the request
+
+  console.log("prompt: ", prompt);
 
   // Request the OpenAI API for the response based on the prompt
   const response = await openai.createChatCompletion({
@@ -133,7 +139,8 @@ export async function POST(req: Request) {
     onCompletion: async (completion: string) => {
       // This callback is called when the stream completes
       // You can use this to save the final completion to your database
-      console.log(completion)
+      console.log("completion: ", completion)
+      await kv.set(key, completion)
     }
   })
 
