@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import ReverseLookupForm from "@/components/lookupForm";
+import ReverseLookupForm from "@/components/ReverseLookupForm";
 
 export default function Completion() {
   return (

@@ -1,4 +1,4 @@
-import LanguageSelector from "./languageSelector";
+import LanguageSelector from "./LanguageSelector";
 import { Noto_Serif_Devanagari } from "next/font/google";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { response_format } from "@/app/constants";
@@ -31,7 +31,7 @@ const ReverseLookupForm = () => {
   });
 
   return (
-    <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md text-lg">
+    <div className="p-2 rounded-lg shadow-md w-full md:max-w-md text-lg">
       <form
         onSubmit={handleSubmit}
         className="border dark:border:white p-4 rounded-lg"
@@ -48,8 +48,8 @@ const ReverseLookupForm = () => {
             placeholder="Enter the description of the word you want to find"
           />
         </div>
-        <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2">
-          <div className="flex-grow">
+        <div className="flex flex-row md:flex-row justify-between items-end space-x-2 md:space-x-2 mt-4 md:mt-2">
+          <div>
             <LanguageSelector
               language={language}
               onLanguageChange={handleLanguageChange}
@@ -58,7 +58,7 @@ const ReverseLookupForm = () => {
           {isLoading ? (
             <button
               type="button"
-              className="mt-4 md:mt-0 px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800"
+              className="px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800"
               onClick={stop}
             >
               Stop
@@ -66,7 +66,7 @@ const ReverseLookupForm = () => {
           ) : (
             <button
               type="submit"
-              className="mt-4 md:mt-0 px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900"
+              className="px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900"
               disabled={isLoading}
             >
               Find me a word!
@@ -74,7 +74,7 @@ const ReverseLookupForm = () => {
           )}
         </div>
       </form>
-      <div className="p-4 rounded-lg shadow-md m-4 w-full md:max-w-md whitespace-pre-wrap overflow-auto text-lg">
+      <div className="p-4 rounded-lg shadow-md mt-4 w-full md:max-w-md whitespace-pre-wrap overflow-auto text-xl">
         {completion ? (
           <div className={noto.className}>
             <ReactMarkdown>{completion}</ReactMarkdown>
