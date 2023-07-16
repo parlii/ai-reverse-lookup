@@ -1,4 +1,4 @@
-import LanguageSelector from "./LanguageSelector";
+import LanguageSelector from "./Selector";
 import { Noto_Serif_Devanagari } from "next/font/google";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { response_format } from "@/app/constants";
