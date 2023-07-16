@@ -58,7 +58,7 @@ const ReverseLookupForm = () => {
           {isLoading ? (
             <button
               type="button"
-              className="px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800"
+              className="px-2 py-1 border rounded-md bg-red-500 text-white hover:bg-red-700 active:bg-red-800 sm:w-auto whitespace-nowrap"
               onClick={stop}
             >
               Stop
@@ -66,7 +66,7 @@ const ReverseLookupForm = () => {
           ) : (
             <button
               type="submit"
-              className="px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900"
+              className="px-2 py-1 border rounded-md bg-green-700 text-white hover:bg-green-800 active:bg-green-900 sm:w-auto whitespace-nowrap"
               disabled={isLoading}
             >
               Find me a word!
