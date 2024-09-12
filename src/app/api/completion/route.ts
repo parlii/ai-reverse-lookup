@@ -5,8 +5,6 @@ import {
 } from "openai-edge";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 
-import { kv } from "@vercel/kv";
-
 export const runtime = "edge";
 
 const apiConfig = new Configuration({
@@ -32,11 +30,10 @@ function buildPrompt(prompt: string, language: string) {
 
 The entire response should be formatted in Markdown and in the language: ${language}. Do not include any word in any other language. Delineate response as appropriate and use line breaks for better readability.
 
-${
-  language !== "English"
-    ? `Please note that the response should be in the target language ${language}, not English. For example, if the target language is Spanish, the response should be in Spanish, not English. The response should also not include any English translations!`
-    : ""
-}
+${language !== "English"
+      ? `Please note that the response should be in the target language ${language}, not English. For example, if the target language is Spanish, the response should be in Spanish, not English. The response should also not include any English translations!`
+      : ""
+    }
 
 For example, a response might look like this for a word in the Nepali language:
 
@@ -75,21 +72,17 @@ function generateKey(prompt: string) {
 
 async function requestOpenAI(messages: any) {
   const response = await openai.createChatCompletion({
-    model: "gpt-4",
+    model: "gpt-4o-mini",
     stream: true,
     messages: messages,
-    max_tokens: 500,
+    max_tokens: 1000,
     temperature: 0.1,
   });
   return response;
 }
 
 function handleOpenAIResponse(response: any, key: string) {
-  const stream = OpenAIStream(response, {
-    onCompletion: async (completion: string) => {
-      await kv.set(key, completion);
-    },
-  });
+  const stream = OpenAIStream(response);
   return new StreamingTextResponse(stream);
 }
 

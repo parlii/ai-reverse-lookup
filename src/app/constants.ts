@@ -2,13 +2,13 @@
 export const response_format = `
 Example response:
 
-**आलस्य** (ālasya) *नाम*
+**Seaweed** (ˈsiːwiːd) *Noun*
 
-निष्क्रियताको अवस्था वा स्थिति, विशेष गतिविहीनता वा कार्यक्षमताहीनता जस्तो कि मानिसहरूले आमतौरमा आत्मीय वा शारीरिक क्षमता वा इच्छा देखाउँदैनन्। 
+A plant-like organism that lives in the sea or ocean, often green or brown, but can also be yellow. It is a type of algae and can range in size from microscopic to very large, like kelp.
 
-*मलाई आज आलस्य छ।*
+*The beach was littered with yellow seaweed after the storm.*
 
-Etymology: यस शब्दको मूल भाषा संस्कृत हो। "आलस्य" भन्नाले संस्कृतमा "अलस्य" अर्थात "अलस्य" भन्ने अर्थ छ, जुन सामान्यतया आलस्य, काम वा कठिनाईलाई जन्म दिने गर्दछ। 
+Etymology: The term "seaweed" comes from the Old English "sǣwȳd", which is a compound of "sǣ" (sea) and "wȳd" (weed).
 
-Alternatives: सुस्ती, अकर्मण्यता, निष्क्रियता
+Alternatives: Algae, Kelp, Marine Algae
 `;
