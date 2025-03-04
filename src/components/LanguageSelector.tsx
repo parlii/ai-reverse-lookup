@@ -15,7 +15,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
     value={language}
     onChange={onLanguageChange}
     required
-    className="block w-full px-3 py-2 text-sm rounded-md border dark:bg-gray-700 dark:text-white"
+    className="block w-auto px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-shadow dark:bg-gray-700 dark:text-white"
     placeholder="Select a language"
   >
     <option value="English">English</option>
