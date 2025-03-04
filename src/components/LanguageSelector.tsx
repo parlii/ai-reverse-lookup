@@ -19,7 +19,7 @@ const LanguageSelector = ({
         name="language"
         value={language}
         onChange={onLanguageChange}
-        className="block w-full px-3 py-2 text-white bg-[#3d405b] border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent transition-shadow font-chillax font-semibold"
+        className="block w-full px-3 py-2 text-white bg-navy border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent transition-shadow font-chillax font-semibold"
       >
         <option value="English">English</option>
         <option value="Spanish">Spanish</option>

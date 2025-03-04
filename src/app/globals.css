@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  /* System colors */
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -15,7 +16,11 @@
   --color-navy-light: #50536b;
   --color-gold: #f2cc8f;
   --color-text: 244, 241, 222;
-  /* #f4f1de */
+
+  /* UI specific colors */
+  --color-background-dark: #252637;
+  --color-background-medium: #313349;
+  --color-accent-yellow: #deec13;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,75 +36,26 @@ body {
   background-color: var(--color-navy);
 }
 
-/* Custom utility classes */
-.bg-cream {
-  background-color: var(--color-cream);
-}
-
-.bg-sage {
-  background-color: var(--color-sage);
-}
-
-.bg-terracotta {
-  background-color: var(--color-terracotta);
-}
-
-.bg-navy {
-  background-color: var(--color-navy);
-}
-
-.bg-navy-light {
-  background-color: var(--color-navy-light);
-}
-
-.bg-gold {
-  background-color: var(--color-gold);
-}
-
-.text-navy {
-  color: var(--color-navy);
-}
-
-.text-cream {
-  color: var(--color-cream);
-}
-
-.text-terracotta {
-  color: var(--color-terracotta);
-}
-
-.text-gold {
-  color: var(--color-gold);
-}
-
-.text-sage {
-  color: var(--color-sage);
-}
-
-.font-chillax {
-  font-family: var(--font-chillax);
-}
-
-.font-chillax-semibold {
-  font-family: var(--font-chillax-semibold);
-}
-
-.font-satoshi {
-  font-family: var(--font-satoshi);
-  font-weight: 300;
-}
-
-.font-satoshi-medium {
-  font-family: var(--font-satoshi-medium);
-}
-
 /* Title styling with improved readability */
 .title-text {
   letter-spacing: 0.05em;
   font-weight: 600;
 }
 
+/* Custom utility classes */
 @layer utilities {
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+
+  .bg-sage {
+    background-color: var(--color-sage);
+  }
+
+  .bg-terracotta {
+    background-color: var(--color-terracotta);
+  }
+
   .bg-navy {
     background-color: var(--color-navy);
   }
@@ -108,20 +64,20 @@ body {
     background-color: var(--color-navy-light);
   }
 
-  .bg-cream {
-    background-color: var(--color-cream);
-  }
-
-  .bg-terracotta {
-    background-color: var(--color-terracotta);
-  }
-
   .bg-gold {
     background-color: var(--color-gold);
   }
 
-  .bg-sage {
-    background-color: var(--color-sage);
+  .bg-dark {
+    background-color: var(--color-background-dark);
+  }
+
+  .bg-medium {
+    background-color: var(--color-background-medium);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent-yellow);
   }
 
   .text-navy {
@@ -144,6 +100,35 @@ body {
     color: var(--color-sage);
   }
 
+  .text-accent {
+    color: var(--color-accent-yellow);
+  }
+
+  /* Border color utilities */
+  .border-accent {
+    border-color: var(--color-accent-yellow);
+  }
+
+  .border-navy {
+    border-color: var(--color-navy);
+  }
+
+  .border-cream {
+    border-color: var(--color-cream);
+  }
+
+  .border-gold {
+    border-color: var(--color-gold);
+  }
+
+  .border-sage {
+    border-color: var(--color-sage);
+  }
+
+  .border-terracotta {
+    border-color: var(--color-terracotta);
+  }
+
   .font-chillax {
     font-family: var(--font-chillax);
   }
@@ -154,6 +139,7 @@ body {
 
   .font-satoshi {
     font-family: var(--font-satoshi);
+    font-weight: 300;
   }
 
   .font-satoshi-medium {

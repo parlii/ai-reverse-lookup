@@ -130,18 +130,18 @@ const ReverseLookupForm = () => {
 
         {/* Word Finder - Center - Fixed width to prevent resizing */}
         <div className="w-full max-w-2xl flex-shrink-0">
-          <div className="bg-[#252637] rounded-t-lg p-4 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-[#deec13] font-chillax tracking-wide uppercase">WORD FINDER</h2>
+          <div className="bg-dark rounded-t-lg p-4 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-accent font-chillax tracking-wide uppercase">WORD FINDER</h2>
             <button
               onClick={() => setShowHistory(!showHistory)}
-              className="px-4 py-2 rounded-lg bg-[#313349] text-[#f4f1de] hover:bg-opacity-90 transition-all shadow-sm font-chillax font-semibold"
+              className="px-4 py-2 rounded-lg bg-medium text-cream hover:bg-opacity-90 transition-all shadow-sm font-chillax font-semibold"
             >
               History
             </button>
           </div>
           <form
             onSubmit={handleSubmit}
-            className="bg-[#313349] p-5 shadow-md font-chillax"
+            className="bg-medium p-5 shadow-md font-chillax"
           >
             <div className="flex flex-col space-y-3">
               <textarea
@@ -151,8 +151,9 @@ const ReverseLookupForm = () => {
                 onChange={handleInputChange}
                 rows={3}
                 required
-                className="block flex-grow px-3 py-2 border border-[#deec13] bg-[#252637] text-white rounded-lg resize-none focus:ring-1 focus:ring-[#deec13] focus:border-[#deec13] transition-shadow font-satoshi"
+                className="block flex-grow px-3 py-2 border-2 border-accent bg-dark text-white rounded-lg resize-none focus:border-accent focus:outline-none transition-shadow font-satoshi"
                 placeholder="Enter the description of the word you want to find"
+                style={{ borderColor: 'var(--color-accent-yellow)' }}
               />
             </div>
             <div className="flex flex-row items-center justify-between mt-4">
@@ -166,7 +167,7 @@ const ReverseLookupForm = () => {
                 <button
                   type="button"
                   onClick={handleSuggest}
-                  className="px-4 py-2 rounded-lg bg-[#3d405b] text-white hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
+                  className="px-4 py-2 rounded-lg bg-navy text-white hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
                 >
                   Suggest
                 </button>
@@ -181,7 +182,7 @@ const ReverseLookupForm = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-lg bg-[#deec13] text-[#313349] hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
+                    className="px-4 py-2 rounded-lg bg-accent text-navy hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
                     disabled={isLoading}
                   >
                     Find
@@ -190,7 +191,7 @@ const ReverseLookupForm = () => {
               </div>
             </div>
           </form>
-          <div className="bg-[#313349] p-5 rounded-b-lg shadow-md whitespace-pre-wrap overflow-auto text-white font-satoshi">
+          <div className="bg-medium p-5 rounded-b-lg shadow-md whitespace-pre-wrap overflow-auto text-white font-satoshi">
             {completion ? (
               <div className="text-white font-satoshi">
                 {(() => {

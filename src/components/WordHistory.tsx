@@ -79,20 +79,20 @@ const WordHistory: React.FC<WordHistoryProps> = ({ refreshTrigger, onSelectWord 
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-[#252637] rounded-t-lg p-4 flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[#deec13] font-chillax tracking-wide uppercase">HISTORY</h2>
+      <div className="bg-dark rounded-t-lg p-4 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-accent font-chillax tracking-wide uppercase">HISTORY</h2>
         <button
           onClick={handleClearHistory}
-          className="px-4 py-2 rounded-lg bg-[#3d405b] text-white hover:bg-opacity-90 transition-all shadow-sm font-chillax font-semibold"
+          className="px-4 py-2 rounded-lg bg-navy text-white hover:bg-opacity-90 transition-all shadow-sm font-chillax font-semibold"
           disabled={history.length === 0}
         >
           Clear
         </button>
       </div>
-      <div className="bg-[#313349] p-5 rounded-b-lg shadow-md max-h-[500px] overflow-y-auto">
+      <div className="bg-medium p-5 rounded-b-lg shadow-md max-h-[500px] overflow-y-auto">
         {loading ? (
           <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#deec13]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent"></div>
           </div>
         ) : error ? (
           <div className="text-center py-4 text-white font-satoshi">{error}</div>
@@ -104,7 +104,7 @@ const WordHistory: React.FC<WordHistoryProps> = ({ refreshTrigger, onSelectWord 
               <li key={index}>
                 <button
                   onClick={() => onSelectWord(item.description, item.language, item.completion)}
-                  className="w-full text-left p-3 rounded-lg bg-[#252637] text-white hover:bg-opacity-80 transition-all font-satoshi"
+                  className="w-full text-left p-3 rounded-lg bg-dark text-white hover:bg-opacity-80 transition-all font-satoshi"
                 >
                   <div className="font-chillax font-semibold">{item.word}</div>
                   <div className="text-sm text-white/80 truncate">{item.description}</div>
