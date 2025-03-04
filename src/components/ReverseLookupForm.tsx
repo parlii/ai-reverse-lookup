@@ -1,13 +1,10 @@
 import LanguageSelector from "./LanguageSelector";
-import { Noto_Serif_Devanagari } from "next/font/google";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { response_format } from "@/app/constants";
 import { useCompletion } from "ai/react";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { extractWordInfo } from "@/lib/extractWord";
 import WordHistory from "./WordHistory";
-
-const noto = Noto_Serif_Devanagari({ subsets: ["devanagari", "latin"] });
 
 interface ReactMarkdownWithPronunciationProps {
   children: string;
@@ -32,9 +29,26 @@ const ReverseLookupForm = () => {
     setLanguage(event.target.value);
   };
 
+  const handleSuggest = async () => {
+    try {
+      const response = await fetch('/api/suggest');
+      const data = await response.json();
+      if (data.description) {
+        // Create the input change event
+        const event = {
+          target: { value: data.description }
+        } as React.ChangeEvent<HTMLTextAreaElement>;
+        // Update the input field
+        handleInputChange(event);
+      }
+    } catch (error) {
+      console.error('Failed to fetch suggestion:', error);
+    }
+  };
+
   const {
     completion,
-    setCompletion, // Use the setCompletion function directly
+    setCompletion,
     input,
     handleInputChange,
     handleSubmit,
@@ -116,18 +130,18 @@ const ReverseLookupForm = () => {
 
         {/* Word Finder - Center - Fixed width to prevent resizing */}
         <div className="w-full max-w-2xl flex-shrink-0">
-          <div className="bg-gradient-to-r from-cyan-700 to-teal-700 rounded-t-lg p-4 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-white">Word Finder</h2>
+          <div className="bg-[#252637] rounded-t-lg p-4 flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-[#deec13] font-chillax tracking-wide uppercase">WORD FINDER</h2>
             <button
               onClick={() => setShowHistory(!showHistory)}
-              className="px-3 py-1 text-sm rounded-md bg-white/20 text-white hover:bg-white/30 transition-all shadow-sm"
+              className="px-4 py-2 rounded-lg bg-[#313349] text-[#f4f1de] hover:bg-opacity-90 transition-all shadow-sm font-chillax font-semibold"
             >
               History
             </button>
           </div>
           <form
             onSubmit={handleSubmit}
-            className="bg-white dark:bg-gray-800 p-5 shadow-md"
+            className="bg-[#313349] p-5 shadow-md font-chillax"
           >
             <div className="flex flex-col space-y-3">
               <textarea
@@ -137,7 +151,7 @@ const ReverseLookupForm = () => {
                 onChange={handleInputChange}
                 rows={3}
                 required
-                className="block flex-grow px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg resize-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-shadow dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white"
+                className="block flex-grow px-3 py-2 border border-[#deec13] bg-[#252637] text-white rounded-lg resize-none focus:ring-1 focus:ring-[#deec13] focus:border-[#deec13] transition-shadow font-satoshi"
                 placeholder="Enter the description of the word you want to find"
               />
             </div>
@@ -148,29 +162,37 @@ const ReverseLookupForm = () => {
                   onLanguageChange={handleLanguageChange}
                 />
               </div>
-              {isLoading ? (
+              <div className="flex gap-2">
                 <button
                   type="button"
-                  className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 active:bg-red-700 shadow-sm transition-all"
-                  onClick={stop}
+                  onClick={handleSuggest}
+                  className="px-4 py-2 rounded-lg bg-[#3d405b] text-white hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
                 >
-                  Stop
+                  Suggest
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-600 text-white hover:from-teal-600 hover:to-cyan-700 active:from-teal-700 active:to-cyan-800 shadow-sm transition-all"
-                  disabled={isLoading}
-                >
-                  Find
-                </button>
-              )}
+                {isLoading ? (
+                  <button
+                    type="button"
+                    className="px-4 py-2 rounded-lg bg-red-500 text-cream hover:bg-red-600 active:bg-red-700 shadow-sm transition-all font-chillax font-semibold"
+                    onClick={stop}
+                  >
+                    Stop
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-lg bg-[#deec13] text-[#313349] hover:bg-opacity-90 active:bg-opacity-100 shadow-sm transition-all font-chillax font-semibold"
+                    disabled={isLoading}
+                  >
+                    Find
+                  </button>
+                )}
+              </div>
             </div>
           </form>
-          <div className="bg-white dark:bg-gray-800 p-5 rounded-b-lg shadow-md whitespace-pre-wrap overflow-auto text-xl">
+          <div className="bg-[#313349] p-5 rounded-b-lg shadow-md whitespace-pre-wrap overflow-auto text-white font-satoshi">
             {completion ? (
-              <div className={noto.className}>
-                {/* Enhanced markdown rendering with proper spacing */}
+              <div className="text-white font-satoshi">
                 {(() => {
                   // Parse the markdown to find the word and its surrounding context
                   // Fix markdown spacing without adding too many line breaks
@@ -204,7 +226,11 @@ const ReverseLookupForm = () => {
                       // Create element with the word and button
                       result.push(
                         <div key={i} className="flex items-baseline mb-2">
-                          <ReactMarkdown>{beforeWord}</ReactMarkdown>
+                          <div className="font-chillax font-semibold">
+                            <ReactMarkdown components={{
+                              strong: ({ node, ...props }) => <span className="font-chillax font-semibold" {...props} />
+                            }}>{beforeWord}</ReactMarkdown>
+                          </div>
                           {/* Show sound button for all languages, use Hindi for Nepali */}
                           <button
                             onClick={() => {
@@ -237,7 +263,7 @@ const ReverseLookupForm = () => {
 
                               window.speechSynthesis.speak(utterance);
                             }}
-                            className="mx-1 p-1.5 inline-flex items-center justify-center bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-full hover:from-teal-600 hover:to-cyan-600 shadow-sm transition-all focus:outline-none"
+                            className="mx-1 p-1.5 inline-flex items-center justify-center bg-[#deec13] text-navy rounded-full hover:bg-opacity-90 shadow-sm transition-all focus:outline-none font-chillax font-semibold"
                             style={{ width: '24px', height: '24px' }}
                             title="Listen to pronunciation"
                             aria-label="Listen to pronunciation"
@@ -266,8 +292,8 @@ const ReverseLookupForm = () => {
                 })()}
               </div>
             ) : (
-              <div className="text-gray-500 space-y-2">
-                <ReactMarkdown>{response_format}</ReactMarkdown>
+              <div className="text-gray-400 space-y-2 font-satoshi">
+                {/* Empty state - no text needed */}
               </div>
             )}
           </div>

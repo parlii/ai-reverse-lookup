@@ -3,6 +3,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
+import { chillax, satoshi } from '@/lib/fonts';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,10 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <>
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-      <Analytics />
-    </html>
+      <html lang="en" className={`${chillax.variable} ${satoshi.variable}`}>
+        <body className={`${chillax.className}`}>{children}</body>
+        <Analytics />
+      </html>
     </>
   )
 }

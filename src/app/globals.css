@@ -6,6 +6,16 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  /* Custom color palette */
+  --color-cream: #f4f1de;
+  --color-sage: #81b29a;
+  --color-terracotta: #e07a5f;
+  --color-navy: #3d405b;
+  --color-navy-light: #50536b;
+  --color-gold: #f2cc8f;
+  --color-text: 244, 241, 222;
+  /* #f4f1de */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +27,136 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--color-cream);
+  background-color: var(--color-navy);
+}
+
+/* Custom utility classes */
+.bg-cream {
+  background-color: var(--color-cream);
+}
+
+.bg-sage {
+  background-color: var(--color-sage);
+}
+
+.bg-terracotta {
+  background-color: var(--color-terracotta);
+}
+
+.bg-navy {
+  background-color: var(--color-navy);
+}
+
+.bg-navy-light {
+  background-color: var(--color-navy-light);
+}
+
+.bg-gold {
+  background-color: var(--color-gold);
+}
+
+.text-navy {
+  color: var(--color-navy);
+}
+
+.text-cream {
+  color: var(--color-cream);
+}
+
+.text-terracotta {
+  color: var(--color-terracotta);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+.text-sage {
+  color: var(--color-sage);
+}
+
+.font-chillax {
+  font-family: var(--font-chillax);
+}
+
+.font-chillax-semibold {
+  font-family: var(--font-chillax-semibold);
+}
+
+.font-satoshi {
+  font-family: var(--font-satoshi);
+  font-weight: 300;
+}
+
+.font-satoshi-medium {
+  font-family: var(--font-satoshi-medium);
+}
+
+/* Title styling with improved readability */
+.title-text {
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+@layer utilities {
+  .bg-navy {
+    background-color: var(--color-navy);
+  }
+
+  .bg-navy-light {
+    background-color: var(--color-navy-light);
+  }
+
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+
+  .bg-terracotta {
+    background-color: var(--color-terracotta);
+  }
+
+  .bg-gold {
+    background-color: var(--color-gold);
+  }
+
+  .bg-sage {
+    background-color: var(--color-sage);
+  }
+
+  .text-navy {
+    color: var(--color-navy);
+  }
+
+  .text-cream {
+    color: var(--color-cream);
+  }
+
+  .text-terracotta {
+    color: var(--color-terracotta);
+  }
+
+  .text-gold {
+    color: var(--color-gold);
+  }
+
+  .text-sage {
+    color: var(--color-sage);
+  }
+
+  .font-chillax {
+    font-family: var(--font-chillax);
+  }
+
+  .font-chillax-semibold {
+    font-family: var(--font-chillax-semibold);
+  }
+
+  .font-satoshi {
+    font-family: var(--font-satoshi);
+  }
+
+  .font-satoshi-medium {
+    font-family: var(--font-satoshi-medium);
+  }
 }
