@@ -18,10 +18,6 @@ Unlike traditional dictionaries that require you to know the word to find its me
 - **Beautiful UI**: Clean, responsive interface with dark mode for comfortable use
 - **Markdown Formatting**: Results are beautifully formatted with word, pronunciation, definition, example usage, and etymology
 
-## 🖼️ Screenshots
-
-[Screenshots would be placed here]
-
 ## 🚀 Getting Started
 
 ### Prerequisites
