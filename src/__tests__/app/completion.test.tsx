@@ -26,11 +26,11 @@ describe('Completion Component', () => {
     expect(screen.getByTestId('mock-reverse-lookup-form')).toBeInTheDocument();
   });
 
-  it('renders the footer with copyright information', () => {
+  it('renders the footer with project information', () => {
     render(<Completion />);
 
-    // Check if the footer is rendered with copyright text
-    const footerText = screen.getByText(/© 2023 AI Reverse Lookup. All rights reserved./i);
+    // Check if the footer is rendered with open source text
+    const footerText = screen.getByText(/Word Finder - Open Source Project/i);
     expect(footerText).toBeInTheDocument();
   });
 

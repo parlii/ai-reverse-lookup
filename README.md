@@ -1,10 +1,10 @@
-# AI Reverse Lookup Dictionary
+# Word Finder
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/parlii/ai-reverse-lookup/ci.yml?branch=main)
 
 ## 🔍 What Problem Does This Solve?
 
-Have you ever experienced the frustrating "tip-of-the-tongue" phenomenon? You know exactly what a word means, but you just can't recall it. The AI Reverse Lookup Dictionary solves this problem by allowing you to describe a word in natural language, and it will find the word you're looking for.
+Have you ever experienced the frustrating "tip-of-the-tongue" phenomenon? You know exactly what a word means, but you just can't recall it. Word Finder solves this problem by allowing you to describe a word in natural language, and it will find the word you're looking for.
 
 Unlike traditional dictionaries that require you to know the word to find its meaning, this reverse dictionary works the other way around - from meaning to word.
 

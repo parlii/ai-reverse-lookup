@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 import { chillax, satoshi } from '@/lib/fonts';
 
 export const metadata: Metadata = {
-  title: 'Reverse Lookup with AI',
-  description: 'Reverse lookup dictionary powered by GPT 4',
+  title: 'Word Finder',
+  description: 'Word finder powered by GPT 4',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' }

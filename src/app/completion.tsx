@@ -11,7 +11,7 @@ export default function Completion() {
         <ReverseLookupForm />
       </div>
       <footer className="mt-auto py-4 text-center text-sm text-navy font-chillax">
-        <p>© 2023 AI Reverse Lookup. All rights reserved.</p>
+        <p>Word Finder - Open Source Project</p>
       </footer>
     </div>
   );
