@@ -139,7 +139,7 @@ const ReverseLookupForm = () => {
         <div className="w-full max-w-2xl flex-shrink-0">
           <div className="bg-dark rounded-t-lg p-4 flex justify-between items-center">
             <h2 className="text-xl font-semibold text-accent font-chillax tracking-wide uppercase">WORD FINDER</h2>
-            <div className="flex gap-2">
+            <div data-testid="github-link" className="flex gap-2">
               <a
                 href="https://github.com/parlii/ai-reverse-lookup"
                 target="_blank"

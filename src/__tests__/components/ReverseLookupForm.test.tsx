@@ -40,7 +40,7 @@ describe('ReverseLookupForm Component', () => {
     // Check for main elements
     expect(screen.getByText('WORD FINDER')).toBeInTheDocument();
     expect(screen.getByText('History')).toBeInTheDocument();
-    expect(screen.getByText('GitHub')).toBeInTheDocument();
+    expect(screen.getByTestId('github-link')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Enter the description of the word you want to find')).toBeInTheDocument();
     expect(screen.getByText('Find')).toBeInTheDocument();
     expect(screen.getByText('Suggest')).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('ReverseLookupForm Component', () => {
   it('has a GitHub link that opens in a new tab', () => {
     render(<ReverseLookupForm />);
 
-    const githubLink = screen.getByText('GitHub').closest('a');
+    const githubLink = screen.getByTestId('github-link').querySelector('a');
     expect(githubLink).toHaveAttribute('href', 'https://github.com/parlii/ai-reverse-lookup');
     expect(githubLink).toHaveAttribute('target', '_blank');
     expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
