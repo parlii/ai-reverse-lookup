@@ -4,12 +4,12 @@ import localFont from 'next/font/local';
 export const chillax = localFont({
   src: [
     {
-      path: '../../public/fonts/chillax/Chillax_Complete/Fonts/WEB/fonts/Chillax-Regular.woff2',
+      path: '../../public/fonts/chillax/Chillax-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/chillax/Chillax_Complete/Fonts/WEB/fonts/Chillax-Semibold.woff2',
+      path: '../../public/fonts/chillax/Chillax-Semibold.woff2',
       weight: '600',
       style: 'normal',
     },
@@ -22,12 +22,12 @@ export const chillax = localFont({
 export const satoshi = localFont({
   src: [
     {
-      path: '../../public/fonts/satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff2',
+      path: '../../public/fonts/satoshi/Satoshi-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2',
+      path: '../../public/fonts/satoshi/Satoshi-Medium.woff2',
       weight: '500',
       style: 'normal',
     },
