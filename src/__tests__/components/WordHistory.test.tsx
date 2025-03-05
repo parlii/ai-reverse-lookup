@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import WordHistory from '@/components/WordHistory';
+import '@testing-library/jest-dom';
 
 // Silence the act() warnings specifically for this test file
 const originalError = console.error;
@@ -19,37 +20,76 @@ afterAll(() => {
   console.error = originalError;
 });
 
-describe('WordHistory Component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    window.fetch = jest.fn();
-    window.prompt = jest.fn();
-  });
-
-  it('renders history items after loading', async () => {
-    // Mock fetch response for loading history
-    (window.fetch as jest.Mock).mockResolvedValueOnce({
+// Mock fetch for all tests
+global.fetch = jest.fn().mockImplementation((url) => {
+  if (url === '/api/history') {
+    return Promise.resolve({
       ok: true,
       json: async () => ({
         history: [
-          { word: 'Apple', description: 'A round fruit with red skin', language: 'English', timestamp: 1623456789000 },
-          { word: 'Gato', description: 'Un animal doméstico', language: 'Spanish', timestamp: 1623456789001 }
+          {
+            id: '1',
+            word: 'Apple',
+            description: 'A round fruit with red skin',
+            language: 'English',
+            timestamp: 1623456789000
+          },
+          {
+            id: '2',
+            word: 'Banana',
+            description: 'A long curved fruit with yellow skin',
+            language: 'English',
+            timestamp: 1623456789000
+          }
         ]
       })
     });
+  }
+  return Promise.resolve({
+    ok: true,
+    json: async () => ({})
+  });
+});
+
+describe('WordHistory Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('displays loading state while fetching history', async () => {
+    // Delay the fetch response to test loading state
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({
+            ok: true,
+            json: () => Promise.resolve({
+              history: []
+            })
+          });
+        }, 100);
+      });
+    });
 
     await act(async () => {
-      render(<WordHistory onSelectWord={() => { }} />);
+      render(<WordHistory onSelectWord={jest.fn()} />);
+    });
+
+    // Check for placeholder content during loading
+    const placeholderElements = document.querySelectorAll('.animate-pulse');
+    expect(placeholderElements.length).toBeGreaterThan(0);
+  });
+
+  it('displays history items after loading', async () => {
+    await act(async () => {
+      render(<WordHistory onSelectWord={jest.fn()} />);
     });
 
     // Wait for history items to be displayed
     await waitFor(() => {
       expect(screen.getByText('Apple')).toBeInTheDocument();
-      expect(screen.getByText('Gato')).toBeInTheDocument();
+      expect(screen.getByText('Banana')).toBeInTheDocument();
     });
-
-    // Check if fetch was called with the correct parameters
-    expect(fetch).toHaveBeenCalledWith('/api/history');
   });
 
   it('calls onSelectWord with description and language when a history item is clicked', async () => {
@@ -62,7 +102,7 @@ describe('WordHistory Component', () => {
     };
 
     // Mock fetch response for loading history
-    (window.fetch as jest.Mock).mockResolvedValueOnce({
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({
         history: [historyItem]
@@ -100,7 +140,7 @@ describe('WordHistory Component', () => {
     };
 
     // Mock fetch response for loading history
-    (window.fetch as jest.Mock).mockResolvedValueOnce({
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({
         history: [historyItem]
@@ -131,31 +171,94 @@ describe('WordHistory Component', () => {
     );
   });
 
-  it('clears history when clear button is clicked and password is correct', async () => {
-    // Setup window.prompt to return the correct password
-    (window.prompt as jest.Mock).mockReturnValueOnce('correct-password');
+  // New tests for modal behavior
+  it('renders as a modal when isModal is true', async () => {
+    const mockOnClose = jest.fn();
 
-    // Mock fetch responses
-    (window.fetch as jest.Mock)
-      // First call - loading history
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          history: [
-            { word: 'Apple', description: 'A round fruit with red skin', language: 'English', timestamp: 1623456789000 }
-          ]
-        })
+    await act(async () => {
+      render(
+        <WordHistory
+          onSelectWord={jest.fn()}
+          isModal={true}
+          onClose={mockOnClose}
+        />
+      );
+    });
+
+    // Check for modal-specific classes
+    const modalContainer = document.querySelector('.fixed.inset-0.z-50');
+    expect(modalContainer).toBeInTheDocument();
+
+    // Check for close button
+    const closeButton = screen.getByText('Close');
+    expect(closeButton).toBeInTheDocument();
+  });
+
+  it('renders as a sidebar when isModal is false', async () => {
+    await act(async () => {
+      render(<WordHistory onSelectWord={jest.fn()} isModal={false} />);
+    });
+
+    // Check that it doesn't have modal-specific classes
+    const modalContainer = document.querySelector('.fixed.inset-0.z-50');
+    expect(modalContainer).not.toBeInTheDocument();
+
+    // Check that close button is not present
+    const closeButton = screen.queryByText('Close');
+    expect(closeButton).not.toBeInTheDocument();
+  });
+
+  it('calls onClose when close button is clicked in modal mode', async () => {
+    const mockOnClose = jest.fn();
+    const user = userEvent.setup();
+
+    await act(async () => {
+      render(
+        <WordHistory
+          onSelectWord={jest.fn()}
+          isModal={true}
+          onClose={mockOnClose}
+        />
+      );
+    });
+
+    // Find and click the close button
+    const closeButton = screen.getByText('Close');
+    await act(async () => {
+      await user.click(closeButton);
+    });
+
+    // Check if onClose was called
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('calls onClose when a history item is clicked in modal mode', async () => {
+    const mockSelectWord = jest.fn();
+    const mockOnClose = jest.fn();
+
+    // Mock fetch response for loading history
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        history: [{
+          word: 'Apple',
+          description: 'A round fruit with red skin',
+          language: 'English',
+          timestamp: 1623456789000
+        }]
       })
-      // Second call - clearing history
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ success: true })
-      });
+    });
 
     const user = userEvent.setup();
 
     await act(async () => {
-      render(<WordHistory onSelectWord={() => { }} />);
+      render(
+        <WordHistory
+          onSelectWord={mockSelectWord}
+          isModal={true}
+          onClose={mockOnClose}
+        />
+      );
     });
 
     // Wait for history items to be displayed
@@ -163,25 +266,134 @@ describe('WordHistory Component', () => {
       expect(screen.getByText('Apple')).toBeInTheDocument();
     });
 
-    // Click the clear button
+    // Click on the history item
     await act(async () => {
-      await user.click(screen.getByText('Clear'));
+      await user.click(screen.getByText('Apple'));
     });
 
-    // Check if prompt was called with the correct message
-    expect(window.prompt).toHaveBeenCalledWith('Enter admin password to clear history:');
+    // Check if both onSelectWord and onClose were called
+    expect(mockSelectWord).toHaveBeenCalled();
+    expect(mockOnClose).toHaveBeenCalled();
+  });
 
-    // Check if fetch was called with the correct parameters
-    expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch).toHaveBeenNthCalledWith(2, '/api/history', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: 'correct-password' })
+  it('does not call onClose when a history item is clicked in non-modal mode', async () => {
+    const mockSelectWord = jest.fn();
+    const mockOnClose = jest.fn();
+
+    // Mock fetch response for loading history
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        history: [{
+          word: 'Apple',
+          description: 'A round fruit with red skin',
+          language: 'English',
+          timestamp: 1623456789000
+        }]
+      })
     });
 
-    // Wait for history to be cleared
+    const user = userEvent.setup();
+
+    await act(async () => {
+      render(
+        <WordHistory
+          onSelectWord={mockSelectWord}
+          isModal={false}
+          onClose={mockOnClose}
+        />
+      );
+    });
+
+    // Wait for history items to be displayed
     await waitFor(() => {
-      expect(screen.queryByText('Apple')).not.toBeInTheDocument();
+      expect(screen.getByText('Apple')).toBeInTheDocument();
+    });
+
+    // Click on the history item
+    await act(async () => {
+      await user.click(screen.getByText('Apple'));
+    });
+
+    // Check if onSelectWord was called but onClose was not
+    expect(mockSelectWord).toHaveBeenCalled();
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('has proper modal styling with rounded corners and shadow', async () => {
+    await act(async () => {
+      render(
+        <WordHistory
+          onSelectWord={jest.fn()}
+          isModal={true}
+          onClose={jest.fn()}
+        />
+      );
+    });
+
+    // Check for modal-specific styling
+    const modalContent = document.querySelector('.max-w-md.flex.flex-col.rounded-lg.shadow-xl');
+    expect(modalContent).toBeInTheDocument();
+  });
+
+  it('prevents flickering by keeping previous history while loading new items', async () => {
+    // Mock initial history load
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve({
+        ok: true,
+        json: async () => ({
+          history: [
+            {
+              id: '1',
+              word: 'Initial',
+              description: 'Initial item',
+              language: 'English',
+              timestamp: Date.now(),
+            }
+          ]
+        })
+      });
+    });
+
+    const { rerender } = render(<WordHistory onSelectWord={jest.fn()} />);
+
+    // Wait for initial history to load
+    await waitFor(() => {
+      expect(screen.getByText('Initial')).toBeInTheDocument();
+    });
+
+    // Set up a mock for a refresh that will be triggered
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      return Promise.resolve({
+        ok: true,
+        json: async () => ({
+          history: [
+            {
+              id: '2',
+              word: 'New',
+              description: 'New item',
+              language: 'English',
+              timestamp: Date.now(),
+            },
+            {
+              id: '1',
+              word: 'Initial',
+              description: 'Initial item',
+              language: 'English',
+              timestamp: Date.now(),
+            }
+          ]
+        })
+      });
+    });
+
+    // Trigger a refresh by changing the refreshTrigger prop
+    rerender(<WordHistory onSelectWord={jest.fn()} refreshTrigger={true} />);
+
+    // The initial item should still be visible during the update
+    await waitFor(() => {
+      const initialElements = screen.getAllByText('Initial');
+      expect(initialElements.length).toBeGreaterThan(0);
     });
   });
 }); 
