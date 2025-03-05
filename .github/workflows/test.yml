@@ -1,16 +1,15 @@
 name: Branch Tests
 
 on:
-  push:
-    branches-ignore: [ main, master ]  # Don't run on main/master as ci.yml handles those
+  # Only run on pull requests
   pull_request:
-    branches: [ '**' ]  # Run on all PRs to ensure status checks are registered
+    types: [opened, synchronize, reopened]
 
 jobs:
   test:
     name: Run Tests  # Explicit name for the status check
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v3
     
