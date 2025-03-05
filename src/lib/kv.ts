@@ -145,8 +145,9 @@ export class KVOperations {
 
   // Function to clear all history - protected with password
   async clearHistory(password: string): Promise<boolean> {
-    // Simple static password protection
-    if (password !== "admin123") {
+    // Use the same password as in the API route
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin';
+    if (password !== adminPassword) {
       return false;
     }
 

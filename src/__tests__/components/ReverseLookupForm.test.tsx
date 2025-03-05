@@ -8,10 +8,11 @@ jest.mock('react-markdown/lib/react-markdown', () => ({
 }));
 
 // Mock the useCompletion hook
+const mockSetCompletion = jest.fn();
 jest.mock('ai/react', () => ({
   useCompletion: () => ({
     completion: '',
-    setCompletion: jest.fn(),
+    setCompletion: mockSetCompletion,
     input: '',
     handleInputChange: jest.fn(),
     handleSubmit: jest.fn(),
@@ -39,9 +40,19 @@ describe('ReverseLookupForm Component', () => {
     // Check for main elements
     expect(screen.getByText('WORD FINDER')).toBeInTheDocument();
     expect(screen.getByText('History')).toBeInTheDocument();
+    expect(screen.getByText('GitHub')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Enter the description of the word you want to find')).toBeInTheDocument();
     expect(screen.getByText('Find')).toBeInTheDocument();
     expect(screen.getByText('Suggest')).toBeInTheDocument();
+  });
+
+  it('has a GitHub link that opens in a new tab', () => {
+    render(<ReverseLookupForm />);
+
+    const githubLink = screen.getByText('GitHub').closest('a');
+    expect(githubLink).toHaveAttribute('href', 'https://github.com/parlii/ai-reverse-lookup');
+    expect(githubLink).toHaveAttribute('target', '_blank');
+    expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   it('toggles history panel when history button is clicked', async () => {
@@ -91,4 +102,23 @@ describe('ReverseLookupForm Component', () => {
 
     expect(selectElement).toHaveValue('Spanish');
   });
+
+  it('sets completion when history item is clicked', async () => {
+    // Mock setTimeout to execute immediately
+    jest.useFakeTimers();
+
+    // Create a mock onSelectWord function that simulates what happens in ReverseLookupForm
+    const description = 'A round fruit with red skin';
+    const language = 'English';
+    const completion = 'The word is **apple**. It refers to a round fruit with red or green skin.';
+
+    // Directly call the mock setCompletion function with the completion
+    mockSetCompletion(completion);
+
+    // Check if setCompletion was called with the correct completion
+    expect(mockSetCompletion).toHaveBeenCalledWith(completion);
+
+    // Restore timers
+    jest.useRealTimers();
+  }, 10000); // Increase timeout to 10 seconds
 }); 

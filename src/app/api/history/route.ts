@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { word, description, language } = body;
+    const { word, description, language, completion, pronunciation } = body;
 
     // Validate required fields
     if (!word || !description || !language) {
@@ -26,12 +26,14 @@ export async function POST(request: Request) {
       );
     }
 
-    // Add timestamp
+    // Add timestamp and optional fields
     const historyItem = {
       word,
       description,
       language,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      completion, // Include completion if provided
+      pronunciation // Include pronunciation if provided
     };
 
     const saved = await saveToHistory(historyItem);

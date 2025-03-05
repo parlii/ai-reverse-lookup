@@ -60,7 +60,7 @@ const GET = jest.fn().mockImplementation(async () => {
 const POST = jest.fn().mockImplementation(async (request: Request) => {
   try {
     const body = await request.json();
-    const { word, description, language } = body;
+    const { word, description, language, completion, pronunciation } = body;
 
     // Validate required fields
     if (!word || !description || !language) {
@@ -70,12 +70,14 @@ const POST = jest.fn().mockImplementation(async (request: Request) => {
       );
     }
 
-    // Add timestamp
+    // Add timestamp and optional fields
     const historyItem = {
       word,
       description,
       language,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      completion, // Include completion if provided
+      pronunciation // Include pronunciation if provided
     };
 
     const saved = await kv.saveToHistory(historyItem);
@@ -158,7 +160,9 @@ describe('History API', () => {
       const newItem = {
         word: 'test',
         description: 'a test',
-        language: 'English'
+        language: 'English',
+        completion: 'The word is **test**. It refers to an examination.',
+        pronunciation: 'test'
       };
 
       (kv.saveToHistory as jest.Mock).mockResolvedValueOnce(true);
@@ -182,6 +186,8 @@ describe('History API', () => {
         word: 'test',
         description: 'a test',
         language: 'English',
+        completion: 'The word is **test**. It refers to an examination.',
+        pronunciation: 'test',
         timestamp: expect.any(Number)
       }));
     });
