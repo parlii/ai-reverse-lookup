@@ -23,7 +23,7 @@ export async function GET() {
     "a large, marine reptile with a hard shell",
     "a small, nocturnal bird of prey with large eyes",
     "a large, aquatic reptile with sharp teeth and a powerful bite",
-    // New vague descriptions that mimic someone trying to recall a word
+    // Vague descriptions
     "that thing you use to, um, you know, when you want to eat soup",
     "the person who, like, fixes your teeth or whatever",
     "that tall building thing where people work and there's lots of windows",
