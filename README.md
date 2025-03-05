@@ -123,4 +123,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - OpenAI for the GPT-4 API
 - Vercel for hosting and KV storage
 - The Next.js team for the amazing framework
+- [Prakriti Rai](https://raipk.com/) for UI design help and support
 - All contributors who have helped improve this project
