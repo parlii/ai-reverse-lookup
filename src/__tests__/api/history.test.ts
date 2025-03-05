@@ -1,5 +1,20 @@
 import * as kv from '@/lib/kv';
 
+// Store original console.error
+let originalConsoleError: typeof console.error;
+
+beforeAll(() => {
+  // Save original console.error
+  originalConsoleError = console.error;
+  // Replace with silent version for tests
+  console.error = jest.fn();
+});
+
+afterAll(() => {
+  // Restore original console.error
+  console.error = originalConsoleError;
+});
+
 // Mock the KV library
 jest.mock('@/lib/kv', () => ({
   getHistory: jest.fn(),
@@ -9,7 +24,11 @@ jest.mock('@/lib/kv', () => ({
 
 // Create a custom Response mock
 class MockResponse {
-  constructor(body, init = {}) {
+  body: string;
+  status: number;
+  headers: Headers;
+
+  constructor(body: any, init: { status?: number; headers?: HeadersInit } = {}) {
     this.body = typeof body === 'string' ? body : JSON.stringify(body);
     this.status = init.status || 200;
     this.headers = new Headers(init.headers || {});
@@ -22,7 +41,7 @@ class MockResponse {
 
 // Create a custom NextResponse mock
 const NextResponse = {
-  json: (body, init = {}) => {
+  json: (body: any, init: { status?: number; headers?: HeadersInit } = {}) => {
     return new MockResponse(body, init);
   }
 };
@@ -38,7 +57,7 @@ const GET = jest.fn().mockImplementation(async () => {
   }
 });
 
-const POST = jest.fn().mockImplementation(async (request) => {
+const POST = jest.fn().mockImplementation(async (request: Request) => {
   try {
     const body = await request.json();
     const { word, description, language } = body;
@@ -70,7 +89,7 @@ const POST = jest.fn().mockImplementation(async (request) => {
   }
 });
 
-const DELETE = jest.fn().mockImplementation(async (request) => {
+const DELETE = jest.fn().mockImplementation(async (request: Request) => {
   try {
     const body = await request.json();
     const { password } = body;

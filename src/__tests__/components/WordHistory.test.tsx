@@ -4,6 +4,21 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import WordHistory from '@/components/WordHistory';
 
+// Silence the act() warnings specifically for this test file
+const originalError = console.error;
+beforeAll(() => {
+  console.error = (...args) => {
+    if (/Warning: The current testing environment is not configured to support act/.test(args[0])) {
+      return;
+    }
+    originalError.call(console, ...args);
+  };
+});
+
+afterAll(() => {
+  console.error = originalError;
+});
+
 describe('WordHistory Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();

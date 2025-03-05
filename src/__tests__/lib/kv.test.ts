@@ -16,6 +16,21 @@ describe('KV Library', () => {
   // Create an instance of KVOperations with our mock provider
   const kvOperations = new KVOperations(mockClientProvider);
 
+  // Store original console.error
+  let originalConsoleError: typeof console.error;
+
+  beforeAll(() => {
+    // Save original console.error
+    originalConsoleError = console.error;
+    // Replace with silent version for tests
+    console.error = jest.fn();
+  });
+
+  afterAll(() => {
+    // Restore original console.error
+    console.error = originalConsoleError;
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
