@@ -52,4 +52,4 @@ export async function GET() {
   return NextResponse.json({
     description: randomDescription
   });
-} 
+} // Force refresh of status checks
