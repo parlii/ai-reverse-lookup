@@ -1,14 +1,17 @@
 import './globals.css'
 
 import { Analytics } from '@vercel/analytics/react';
-import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
-
-const inter = Inter({ subsets: ['latin'] })
+import { chillax, satoshi } from '@/lib/fonts';
 
 export const metadata: Metadata = {
-  title: 'Reverse Lookup with AI',
-  description: 'Reverse lookup dictionary powered by GPT 4',
+  title: 'Word Finder',
+  description: 'Word finder powered by GPT 4',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' }
+    ]
+  }
 }
 
 export default function RootLayout({
@@ -18,10 +21,13 @@ export default function RootLayout({
 }) {
   return (
     <>
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-      <Analytics />
-    </html>
+      <html lang="en" className={`${chillax.variable} ${satoshi.variable}`}>
+        <head>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        </head>
+        <body className={`${chillax.className}`}>{children}</body>
+        <Analytics />
+      </html>
     </>
   )
 }

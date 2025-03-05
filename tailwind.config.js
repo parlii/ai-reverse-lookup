@@ -12,6 +12,18 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        'accent': 'var(--color-accent-yellow)',
+        'cream': 'var(--color-cream)',
+        'navy': 'var(--color-navy)',
+        'gold': 'var(--color-gold)',
+      },
+      borderColor: {
+        'accent': 'var(--color-accent-yellow)',
+        'cream': 'var(--color-cream)',
+        'navy': 'var(--color-navy)',
+        'gold': 'var(--color-gold)',
+      },
     },
   },
   darkMode: 'media',

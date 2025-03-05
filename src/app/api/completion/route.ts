@@ -27,6 +27,8 @@ function buildPrompt(prompt: string, language: string) {
   Etymology: A brief explanation of the word's origin.
   --*blank new line*--
   Alternatives (underline, include "Alternatives" simply the alternatives in ${language}, each alternative in a single line separated by a comma)
+  
+  IMPORTANT: The pronunciation guide in parentheses should be simple and accurate, as it will be used for text-to-speech features.
 
 The entire response should be formatted in Markdown and in the language: ${language}. Do not include any word in any other language. Delineate response as appropriate and use line breaks for better readability.
 
@@ -54,7 +56,7 @@ _वैकल्पिकहरू_: सुस्ती, अकर्मण्�
   };
 
   const userPrompt = {
-    role: ChatCompletionRequestMessageRoleEnum.System,
+    role: ChatCompletionRequestMessageRoleEnum.User,
     content: prompt,
   };
 

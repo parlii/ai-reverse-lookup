@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Custom color palette */
+  --color-cream: #f4f1de;
+  --color-navy: #3d405b;
+  --color-navy-light: #50536b;
+  --color-gold: #f2cc8f;
+
+  /* UI specific colors */
+  --color-background-dark: #252637;
+  --color-background-medium: #313349;
+  --color-accent-yellow: #deec13;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +24,93 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--color-cream);
+  background-color: var(--color-navy);
+}
+
+/* Title styling with improved readability */
+.title-text {
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+
+  .bg-navy {
+    background-color: var(--color-navy);
+  }
+
+  .bg-navy-light {
+    background-color: var(--color-navy-light);
+  }
+
+  .bg-gold {
+    background-color: var(--color-gold);
+  }
+
+  .bg-dark {
+    background-color: var(--color-background-dark);
+  }
+
+  .bg-medium {
+    background-color: var(--color-background-medium);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent-yellow);
+  }
+
+  .text-navy {
+    color: var(--color-navy);
+  }
+
+  .text-cream {
+    color: var(--color-cream);
+  }
+
+  .text-gold {
+    color: var(--color-gold);
+  }
+
+  .text-accent {
+    color: var(--color-accent-yellow);
+  }
+
+  /* Border color utilities */
+  .border-accent {
+    border-color: var(--color-accent-yellow);
+  }
+
+  .border-navy {
+    border-color: var(--color-navy);
+  }
+
+  .border-cream {
+    border-color: var(--color-cream);
+  }
+
+  .border-gold {
+    border-color: var(--color-gold);
+  }
+
+  .font-chillax {
+    font-family: var(--font-chillax);
+  }
+
+  .font-chillax-semibold {
+    font-family: var(--font-chillax-semibold);
+  }
+
+  .font-satoshi {
+    font-family: var(--font-satoshi);
+    font-weight: 300;
+  }
+
+  .font-satoshi-medium {
+    font-family: var(--font-satoshi-medium);
+  }
 }
