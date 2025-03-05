@@ -103,7 +103,7 @@ const WordHistory: React.FC<WordHistoryProps> = ({ refreshTrigger, onSelectWord 
             {history.map((item, index) => (
               <li key={index}>
                 <button
-                  onClick={() => onSelectWord(item.word, item.language)}
+                  onClick={() => onSelectWord(item.description, item.language, item.completion)}
                   className="w-full text-left p-3 rounded-lg bg-dark text-white hover:bg-opacity-80 transition-all font-satoshi"
                 >
                   <div className="font-chillax font-semibold">{item.word}</div>

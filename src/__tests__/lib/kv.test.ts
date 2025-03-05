@@ -160,8 +160,13 @@ describe('KV Library', () => {
   });
 
   describe('clearHistory', () => {
+    beforeEach(() => {
+      // Mock process.env.ADMIN_PASSWORD
+      process.env.ADMIN_PASSWORD = 'admin';
+    });
+
     it('clears history with correct password', async () => {
-      const result = await kvOperations.clearHistory('admin123');
+      const result = await kvOperations.clearHistory('admin');
 
       expect(result).toBe(true);
       expect(mockRedisClient.del).toHaveBeenCalledWith('wordHistory');
@@ -178,7 +183,7 @@ describe('KV Library', () => {
       // Setup mock to throw an error
       mockRedisClient.del.mockRejectedValueOnce(new Error('Test error'));
 
-      const result = await kvOperations.clearHistory('admin123');
+      const result = await kvOperations.clearHistory('admin');
 
       expect(result).toBe(false);
       expect(mockRedisClient.del).toHaveBeenCalledWith('wordHistory');

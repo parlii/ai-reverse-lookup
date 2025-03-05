@@ -10,9 +10,6 @@ export default function Completion() {
       <div className="w-full max-w-7xl px-2 md:px-8 flex justify-center mt-6">
         <ReverseLookupForm />
       </div>
-      <footer className="mt-auto py-4 text-center text-sm text-navy font-chillax">
-        <p>Word Finder - Open Source Project</p>
-      </footer>
     </div>
   );
 }

@@ -52,7 +52,7 @@ describe('WordHistory Component', () => {
     expect(fetch).toHaveBeenCalledWith('/api/history');
   });
 
-  it('calls onSelectWord when a history item is clicked', async () => {
+  it('calls onSelectWord with description and language when a history item is clicked', async () => {
     const mockSelectWord = jest.fn();
     const historyItem = {
       word: 'Apple',
@@ -85,8 +85,50 @@ describe('WordHistory Component', () => {
       await user.click(screen.getByText('Apple'));
     });
 
-    // Check if onSelectWord was called with the correct word and language
-    expect(mockSelectWord).toHaveBeenCalledWith(historyItem.word, historyItem.language);
+    // Check if onSelectWord was called with the correct description and language
+    expect(mockSelectWord).toHaveBeenCalledWith(historyItem.description, historyItem.language, undefined);
+  });
+
+  it('passes completion to onSelectWord when available', async () => {
+    const mockSelectWord = jest.fn();
+    const historyItem = {
+      word: 'Apple',
+      description: 'A round fruit with red skin',
+      language: 'English',
+      timestamp: 1623456789000,
+      completion: 'The word is "apple". It refers to a round fruit with red or green skin and a white interior.'
+    };
+
+    // Mock fetch response for loading history
+    (window.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        history: [historyItem]
+      })
+    });
+
+    const user = userEvent.setup();
+
+    await act(async () => {
+      render(<WordHistory onSelectWord={mockSelectWord} />);
+    });
+
+    // Wait for history items to be displayed
+    await waitFor(() => {
+      expect(screen.getByText('Apple')).toBeInTheDocument();
+    });
+
+    // Click on the history item
+    await act(async () => {
+      await user.click(screen.getByText('Apple'));
+    });
+
+    // Check if onSelectWord was called with all three parameters: description, language, and completion
+    expect(mockSelectWord).toHaveBeenCalledWith(
+      historyItem.description,
+      historyItem.language,
+      historyItem.completion
+    );
   });
 
   it('clears history when clear button is clicked and password is correct', async () => {
