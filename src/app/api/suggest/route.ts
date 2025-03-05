@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+// Set the revalidate time to 0 to disable caching
+export const revalidate = 0;
+
 export async function GET() {
   // Example descriptions for different languages
   const exampleDescriptions = [
@@ -49,7 +52,16 @@ export async function GET() {
   // Return a random description
   const randomDescription = exampleDescriptions[Math.floor(Math.random() * exampleDescriptions.length)];
 
-  return NextResponse.json({
+  // Create a response with the random description
+  const response = NextResponse.json({
     description: randomDescription
   });
+
+  // Set cache control headers to prevent caching
+  response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  response.headers.set('Pragma', 'no-cache');
+  response.headers.set('Expires', '0');
+  response.headers.set('Surrogate-Control', 'no-store');
+
+  return response;
 } // Force refresh of status checks
