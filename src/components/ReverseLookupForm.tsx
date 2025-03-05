@@ -100,7 +100,6 @@ const ReverseLookupForm = () => {
               refreshTrigger={historyUpdated}
               onSelectWord={(description, lang, completion) => {
                 if (description) {
-                  console.log("History item selected:", { description, lang, completion });
 
                   // Set the language and input based on the history item
                   setLanguage(lang);
@@ -115,7 +114,6 @@ const ReverseLookupForm = () => {
 
                   // Set completion if available (from history)
                   if (completion) {
-                    console.log("Loading saved completion:", completion);
 
                     // Directly set the completion state
                     setCompletion(completion);
@@ -124,7 +122,6 @@ const ReverseLookupForm = () => {
                     // to ensure React state updates have processed
                     if (!completion) {
                       setTimeout(() => {
-                        console.log("Setting completion with timeout");
                         setCompletion(completion);
                       }, 100);
                     }
