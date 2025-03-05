@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getHistory, clearHistory, WordHistoryItem, saveToHistory } from '@/lib/kv';
+import { getHistory, saveToHistory, clearHistory } from '@/lib/kv';
 
 // GET /api/history - Get all word history
 export async function GET() {
@@ -13,27 +13,28 @@ export async function GET() {
 }
 
 // POST /api/history - Add new item to history
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
-    const { word, description, language, pronunciation, completion } = body;
-    
+    const body = await request.json();
+    const { word, description, language } = body;
+
+    // Validate required fields
     if (!word || !description || !language) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       );
     }
-    
-    const saved = await saveToHistory({
+
+    // Add timestamp
+    const historyItem = {
       word,
-      description, 
+      description,
       language,
-      pronunciation,
-      completion,
       timestamp: Date.now()
-    });
-    
+    };
+
+    const saved = await saveToHistory(historyItem);
     return NextResponse.json({ success: saved });
   } catch (error) {
     console.error('Error adding to history:', error);
@@ -45,18 +46,21 @@ export async function POST(req: Request) {
 }
 
 // DELETE /api/history - Clear all history with password protection
-export async function DELETE(req: Request) {
+export async function DELETE(request: Request) {
   try {
-    const body = await req.json();
+    const body = await request.json();
     const { password } = body;
-    
-    if (!password) {
+
+    // Check password
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin';
+    if (password !== adminPassword) {
       return NextResponse.json(
-        { error: 'Password required', success: false },
-        { status: 400 }
+        { error: 'Invalid password', success: false },
+        { status: 401 }
       );
     }
-    
+
+    // Pass the password to clearHistory if it requires it
     const cleared = await clearHistory(password);
     return NextResponse.json({ success: cleared });
   } catch (error) {

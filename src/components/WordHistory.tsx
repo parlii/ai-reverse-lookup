@@ -91,8 +91,8 @@ const WordHistory: React.FC<WordHistoryProps> = ({ refreshTrigger, onSelectWord 
       </div>
       <div className="bg-medium p-5 rounded-b-lg shadow-md max-h-[500px] overflow-y-auto">
         {loading ? (
-          <div className="flex justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent"></div>
+          <div className="text-center py-4 text-white font-satoshi">
+            Loading...
           </div>
         ) : error ? (
           <div className="text-center py-4 text-white font-satoshi">{error}</div>
@@ -103,7 +103,7 @@ const WordHistory: React.FC<WordHistoryProps> = ({ refreshTrigger, onSelectWord 
             {history.map((item, index) => (
               <li key={index}>
                 <button
-                  onClick={() => onSelectWord(item.description, item.language, item.completion)}
+                  onClick={() => onSelectWord(item.word, item.language)}
                   className="w-full text-left p-3 rounded-lg bg-dark text-white hover:bg-opacity-80 transition-all font-satoshi"
                 >
                   <div className="font-chillax font-semibold">{item.word}</div>

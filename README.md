@@ -67,6 +67,44 @@ The application is built with the following technologies:
 - Vercel KV
 - OpenAI API
 
+## Testing
+
+This project uses Jest and React Testing Library for testing. The testing setup includes:
+
+- Unit tests for components
+- Integration tests for pages
+- Mocking of external dependencies
+
+### Running Tests
+
+To run the tests, use the following commands:
+
+```bash
+# Run tests once
+npm test
+
+# Run tests in watch mode (useful during development)
+npm run test:watch
+
+# Generate test coverage report
+npm run test:coverage
+```
+
+### CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+1. On every pull request and push to the main branch, tests are automatically run
+2. Code coverage reports are generated and uploaded to Codecov
+3. When tests pass on the main branch, the app is automatically deployed to Vercel
+
+To set up the CI/CD pipeline, you need to add the following secrets to your GitHub repository:
+
+- `VERCEL_TOKEN`: Your Vercel API token
+- `VERCEL_ORG_ID`: Your Vercel organization ID
+- `VERCEL_PROJECT_ID`: Your Vercel project ID
+- `CODECOV_TOKEN`: Your Codecov token (optional, for coverage reports)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue.

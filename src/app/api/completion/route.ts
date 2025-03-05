@@ -56,7 +56,7 @@ _वैकल्पिकहरू_: सुस्ती, अकर्मण्�
   };
 
   const userPrompt = {
-    role: ChatCompletionRequestMessageRoleEnum.System,
+    role: ChatCompletionRequestMessageRoleEnum.User,
     content: prompt,
   };
 
