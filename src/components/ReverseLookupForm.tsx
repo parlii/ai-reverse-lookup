@@ -22,6 +22,26 @@ const ReverseLookupForm = () => {
   const [language, setLanguage] = useState<string>("English");
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [historyUpdated, setHistoryUpdated] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isHistoryLoading, setIsHistoryLoading] = useState<boolean>(false);
+
+  // Check if the device is mobile based on screen width
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is the standard md breakpoint in Tailwind
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -62,6 +82,7 @@ const ReverseLookupForm = () => {
     onFinish: async (prompt, completion) => {
       // Try to save to history when we get a completion
       try {
+        setIsHistoryLoading(true);
         const wordInfo = extractWordInfo(completion);
         if (wordInfo && wordInfo.word) {
           const response = await fetch('/api/history', {
@@ -86,48 +107,51 @@ const ReverseLookupForm = () => {
       } catch (error) {
         console.error('Failed to save to history:', error);
         // App continues to work even if history saving fails
+      } finally {
+        setIsHistoryLoading(false);
       }
     }
   });
 
+  // Handle word selection from history
+  const handleSelectWord = (description: string, lang: string, completion?: string) => {
+    if (description) {
+      // Set the language and input based on the history item
+      setLanguage(lang);
+
+      // Create the input change event
+      const event = {
+        target: { value: description }
+      } as React.ChangeEvent<HTMLTextAreaElement>;
+
+      // Update the input field
+      handleInputChange(event);
+
+      // Set completion if available (from history)
+      if (completion) {
+        // Directly set the completion state
+        setCompletion(completion);
+
+        // If direct setting doesn't work, try with a timeout
+        // to ensure React state updates have processed
+        if (!completion) {
+          setTimeout(() => {
+            setCompletion(completion);
+          }, 100);
+        }
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col items-center w-full max-w-7xl">
       <div className="flex flex-row w-full justify-center gap-5">
-        {/* Word History Panel - Left side - No animation, just display/hide */}
-        {showHistory && (
-          <div className="w-[35rem]">
+        {/* Word History Panel - Desktop version (sidebar) */}
+        {showHistory && !isMobile && (
+          <div className="hidden md:block w-[35rem]">
             <WordHistory
               refreshTrigger={historyUpdated}
-              onSelectWord={(description, lang, completion) => {
-                if (description) {
-
-                  // Set the language and input based on the history item
-                  setLanguage(lang);
-
-                  // Create the input change event
-                  const event = {
-                    target: { value: description }
-                  } as React.ChangeEvent<HTMLTextAreaElement>;
-
-                  // Update the input field
-                  handleInputChange(event);
-
-                  // Set completion if available (from history)
-                  if (completion) {
-
-                    // Directly set the completion state
-                    setCompletion(completion);
-
-                    // If direct setting doesn't work, try with a timeout
-                    // to ensure React state updates have processed
-                    if (!completion) {
-                      setTimeout(() => {
-                        setCompletion(completion);
-                      }, 100);
-                    }
-                  }
-                }
-              }}
+              onSelectWord={handleSelectWord}
             />
           </div>
         )}
@@ -317,9 +341,21 @@ const ReverseLookupForm = () => {
           </div>
         </div>
 
-        {/* Add a spacer div when history is shown to maintain centering */}
-        {showHistory && <div className="w-[35rem]"></div>}
+        {/* Add a spacer div when history is shown to maintain centering on desktop */}
+        {showHistory && !isMobile && <div className="hidden md:block w-[35rem]"></div>}
       </div>
+
+      {/* Mobile History Modal - Overlay on top of the Word Finder */}
+      {showHistory && isMobile && (
+        <div className="absolute top-0 left-0 right-0 z-50">
+          <WordHistory
+            refreshTrigger={historyUpdated}
+            onSelectWord={handleSelectWord}
+            isModal={true}
+            onClose={() => setShowHistory(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };
