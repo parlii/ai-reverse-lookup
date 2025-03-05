@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   description: 'Reverse lookup dictionary powered by GPT 4',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', type: 'image/png' }
+      { url: '/favicon.svg', type: 'image/svg+xml' }
     ]
   }
 }
@@ -25,9 +23,7 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${chillax.variable} ${satoshi.variable}`}>
         <head>
-          <link rel="icon" href="/favicon.ico" sizes="any" />
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-          <link rel="icon" href="/favicon.png" type="image/png" />
         </head>
         <body className={`${chillax.className}`}>{children}</body>
         <Analytics />

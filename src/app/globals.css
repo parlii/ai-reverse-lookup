@@ -3,19 +3,11 @@
 @tailwind utilities;
 
 :root {
-  /* System colors */
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
   /* Custom color palette */
   --color-cream: #f4f1de;
-  --color-sage: #81b29a;
-  --color-terracotta: #e07a5f;
   --color-navy: #3d405b;
   --color-navy-light: #50536b;
   --color-gold: #f2cc8f;
-  --color-text: 244, 241, 222;
 
   /* UI specific colors */
   --color-background-dark: #252637;
@@ -46,14 +38,6 @@ body {
 @layer utilities {
   .bg-cream {
     background-color: var(--color-cream);
-  }
-
-  .bg-sage {
-    background-color: var(--color-sage);
-  }
-
-  .bg-terracotta {
-    background-color: var(--color-terracotta);
   }
 
   .bg-navy {
@@ -88,16 +72,8 @@ body {
     color: var(--color-cream);
   }
 
-  .text-terracotta {
-    color: var(--color-terracotta);
-  }
-
   .text-gold {
     color: var(--color-gold);
-  }
-
-  .text-sage {
-    color: var(--color-sage);
   }
 
   .text-accent {
@@ -119,14 +95,6 @@ body {
 
   .border-gold {
     border-color: var(--color-gold);
-  }
-
-  .border-sage {
-    border-color: var(--color-sage);
-  }
-
-  .border-terracotta {
-    border-color: var(--color-terracotta);
   }
 
   .font-chillax {
